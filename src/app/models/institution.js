@@ -24,8 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Institution.associate = function (models) {
-    // associations can be defined here
+  Institution.associate = (models) => {
+    Institution.hasMany(models.FireSector, {
+      foreignKey: "institutionId",
+      as: "fireSectors",
+    });
   };
 
   return Institution;

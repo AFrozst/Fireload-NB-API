@@ -19,14 +19,25 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0.0,
       },
+      institutionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Institutions",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: false,
     }
   );
 
-  FireSector.associate = function (models) {
-    // associations can be defined here
+  FireSector.associate = (models) => {
+    FireSector.belongsTo(models.Institution, {
+      foreignKey: "institutionId",
+      as: "institution",
+    });
   };
 
   return FireSector;
