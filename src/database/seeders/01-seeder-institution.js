@@ -6,25 +6,25 @@ module.exports = {
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte",
-        numberFireSectors: 0,
+        numberFireSectors: 2,
         createdAt: new Date(),
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul",
-        numberFireSectors: 0,
+        numberFireSectors: 2,
         createdAt: new Date(),
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Ceará",
-        numberFireSectors: 0,
+        numberFireSectors: 2,
         createdAt: new Date(),
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Amazonas",
-        numberFireSectors: 0,
+        numberFireSectors: 4,
         createdAt: new Date(),
       },
       {
