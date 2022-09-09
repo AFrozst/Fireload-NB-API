@@ -50,6 +50,25 @@ const FireSectorController = {
       response.status(status).send({ errorMessage });
     }
   },
+
+  createFireSector: async (req, res) => {
+    try {
+      const { institutionId } = req.params;
+      let newFireSector = await FireSector.create({...req.body, institutionId});
+      let institution = await Institution.findByPk(institutionId);
+      institution.numberFireSectors += 1;
+      institution.save();
+
+      return res.status(201).send({
+        message: 'FireSector created successfully',
+        data: newFireSector
+      });
+    } catch (error) {
+      const status = error.status || 500
+      const errorMessage = error.message || 'Unknown error'
+      res.status(status).send({ errorMessage })
+    }
+  },
 };
 
 module.exports = FireSectorController;
