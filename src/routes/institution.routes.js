@@ -7,5 +7,6 @@ const routes = require("../resources/routes");
 router.get(routes.empty, InstitutionController.getInstitutions);
 router.get(routes.id, InstitutionController.getInstitution);
 router.post(routes.empty, InstitutionController.createInstitution);
+router.put(routes.id, InstitutionController.updateInstitution);
 
 module.exports = router;
