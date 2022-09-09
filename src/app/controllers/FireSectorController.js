@@ -26,8 +26,9 @@ const FireSectorController = {
 
   getFireSectorById: async (req, res) => {
     try {
-      const { id } = req.params;
-      let fireSector = await FireSector.findByPk(id, {
+      const { institutionId, id } = req.params;
+      let fireSector = await FireSector.findOne({
+        where: { id, institutionId },
         include: {
           model: Institution,
           as: "institution",
