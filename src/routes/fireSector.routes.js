@@ -12,5 +12,9 @@ router.get(
   routes.institutions.institutionId + routes.fireSectors.url + routes.id,
   FireSectorController.getFireSectorById
 );
+router.post(
+  routes.institutions.institutionId + routes.fireSectors.url,
+  FireSectorController.createFireSector
+);
 
 module.exports = router;
