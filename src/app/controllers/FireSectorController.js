@@ -1,0 +1,55 @@
+const { FireSector, Institution } = require("../models");
+
+const FireSectorController = {
+  getFireSectorsByInstitutionId: async (req, res) => {
+    try {
+      const { institutionId } = req.params;
+      let fireSectors = await FireSector.findAll({
+        where: { institutionId },
+        include: {
+          model: Institution,
+          as: "institution",
+          attributes: ["fullName"],
+        },
+        raw: true,
+        nest: true,
+      });
+      return res.status(200).send({
+        data: fireSectors,
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      response.status(status).send({ errorMessage });
+    }
+  },
+
+  getFireSectorById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let fireSector = await FireSector.findByPk(id, {
+        include: {
+          model: Institution,
+          as: "institution",
+          attributes: ["fullName"],
+        },
+        raw: true,
+        nest: true,
+      });
+      if (!fireSector) {
+        return res.status(404).send({
+          errorMessage: "Fire Sector not found",
+        });
+      }
+      return res.status(200).send({
+        data: fireSector,
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      response.status(status).send({ errorMessage });
+    }
+  },
+};
+
+module.exports = FireSectorController;

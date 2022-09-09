@@ -8,6 +8,7 @@ const ROUTE_URL = "/api";
 const routes = require("./resources/routes");
 const routesWelcome = require("./routes/index");
 const institutionRoutes = require("./routes/institution.routes");
+const fireSectorRoutes = require("./routes/fireSector.routes");
 
 class Application {
   constructor() {
@@ -20,7 +21,9 @@ class Application {
 
   setUproutes() {
     this.express.use(ROUTE_URL, routesWelcome);
+    this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
+    
   }
 
   setUpExpress() {

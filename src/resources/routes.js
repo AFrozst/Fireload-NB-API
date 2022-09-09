@@ -7,4 +7,8 @@ module.exports = {
     url: "/institutions",
     institutionId: "/:institutionId",
   },
+  fireSectors: {
+    url: "/fireSectors",
+    fireSectorId: "/:fireSectorId",
+  },
 };
