@@ -81,6 +81,27 @@ const InstitutionController = {
       return res.status(status).send({ errorMessage });
     }
   },
+
+  deleteInstitution: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let institutionDeleted = await Institution.destroy({
+        where: { id },
+      });
+      if (institutionDeleted === 0) {
+        return res.status(404).send({
+          errorMessage: "Institution not found",
+        });
+      }
+      return res.status(200).send({
+        message: "Institution deleted successfully",
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Internal Server Error";
+      return res.status(status).send({ errorMessage });
+    }
+  },
 };
 
 module.exports = InstitutionController;
