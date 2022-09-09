@@ -42,6 +42,21 @@ const InstitutionController = {
       return res.status(status).send({ errorMessage });
     }
   },
+
+  createInstitution: async (req, res) => {
+    try {
+      req.body.numberFireSectors = 0;
+      let newInstitution = await Institution.create(req.body);
+      return res.status(201).send({
+        message: "Institution created successfully",
+        data: newInstitution,
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Internal Server Error";
+      return res.status(status).send({ errorMessage });
+    }
+  },
 };
 
 module.exports = InstitutionController;
