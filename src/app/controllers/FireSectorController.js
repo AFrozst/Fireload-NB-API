@@ -69,6 +69,29 @@ const FireSectorController = {
       res.status(status).send({ errorMessage })
     }
   },
+
+  updateFireSector: async (req, res) => {
+    try {
+      const { institutionId, id } = req.params;
+      let fireSector = await FireSector.findOne({
+        where: { id, institutionId },
+      });
+      if (!fireSector) {
+        return res.status(404).send({
+          errorMessage: "Institution or Fire Sector not found",
+        });
+      }
+      fireSector.update({...req.body, update: new Date()});
+      return res.status(200).send({
+        message: "Fire Sector updated successfully",
+        data: fireSector,
+      });
+    } catch (error) {
+      const status = error.status || 500
+      const errorMessage = error.message || 'Unknown error'
+      res.status(status).send({ errorMessage })
+    }
+  },
 };
 
 module.exports = FireSectorController;

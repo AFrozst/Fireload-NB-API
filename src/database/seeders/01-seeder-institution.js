@@ -24,7 +24,7 @@ module.exports = {
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Amazonas",
-        numberFireSectors: 4,
+        numberFireSectors: 1,
         createdAt: new Date(),
       },
       {
