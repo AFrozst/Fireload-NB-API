@@ -8,5 +8,6 @@ router.get(routes.empty, InstitutionController.getInstitutions);
 router.get(routes.id, InstitutionController.getInstitution);
 router.post(routes.empty, InstitutionController.createInstitution);
 router.put(routes.id, InstitutionController.updateInstitution);
+router.delete(routes.id, InstitutionController.deleteInstitution);
 
 module.exports = router;
