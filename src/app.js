@@ -5,7 +5,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const ROUTE_URL = "/api";
-const routes = require("./routes/index");
+const routes = require("./resources/routes");
+const routesWelcome = require("./routes/index");
+const institutionRoutes = require("./routes/institution.routes");
 
 class Application {
   constructor() {
@@ -17,7 +19,8 @@ class Application {
   }
 
   setUproutes() {
-    this.express.use(ROUTE_URL, routes);
+    this.express.use(ROUTE_URL, routesWelcome);
+    this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
   }
 
   setUpExpress() {
