@@ -20,5 +20,9 @@ router.put(
   routes.institutions.institutionId + routes.fireSectors.url + routes.id,
   FireSectorController.updateFireSector
 );
+router.delete(
+  routes.institutions.institutionId + routes.fireSectors.url + routes.id,
+  FireSectorController.deleteFireSector
+);
 
 module.exports = router;

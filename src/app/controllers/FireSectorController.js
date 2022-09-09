@@ -54,19 +54,22 @@ const FireSectorController = {
   createFireSector: async (req, res) => {
     try {
       const { institutionId } = req.params;
-      let newFireSector = await FireSector.create({...req.body, institutionId});
+      let newFireSector = await FireSector.create({
+        ...req.body,
+        institutionId,
+      });
       let institution = await Institution.findByPk(institutionId);
       institution.numberFireSectors += 1;
       institution.save();
 
       return res.status(201).send({
-        message: 'FireSector created successfully',
-        data: newFireSector
+        message: "FireSector created successfully",
+        data: newFireSector,
       });
     } catch (error) {
-      const status = error.status || 500
-      const errorMessage = error.message || 'Unknown error'
-      res.status(status).send({ errorMessage })
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      res.status(status).send({ errorMessage });
     }
   },
 
@@ -81,15 +84,37 @@ const FireSectorController = {
           errorMessage: "Institution or Fire Sector not found",
         });
       }
-      fireSector.update({...req.body, update: new Date()});
+      fireSector.update({ ...req.body, update: new Date() });
       return res.status(200).send({
         message: "Fire Sector updated successfully",
         data: fireSector,
       });
     } catch (error) {
-      const status = error.status || 500
-      const errorMessage = error.message || 'Unknown error'
-      res.status(status).send({ errorMessage })
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      res.status(status).send({ errorMessage });
+    }
+  },
+
+  deleteFireSector: async (req, res) => {
+    try {
+      const { institutionId, id } = req.params;
+      let fireSector = await FireSector.findOne({
+        where: { id, institutionId },
+      });
+      if (!fireSector) {
+        return res.status(404).send({
+          errorMessage: "Institution or Fire Sector not found",
+        });
+      }
+      fireSector.destroy();
+      return res.status(200).send({
+        message: "Fire Sector deleted successfully",
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      res.status(status).send({ errorMessage });
     }
   },
 };
