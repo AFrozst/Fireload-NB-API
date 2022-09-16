@@ -11,4 +11,8 @@ module.exports = {
     url: "/fireSectors",
     fireSectorId: "/:fireSectorId",
   },
+  combustibleMaterials: {
+    url: "/combustibleMaterials",
+    combustibleMaterialId: "/:combustibleMaterialId",
+  },
 };
