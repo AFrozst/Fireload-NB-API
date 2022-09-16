@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
 
   CombustibleMaterial.associate = function (models) {
     // associations can be defined here
+    CombustibleMaterial.belongsToMany(models.FireSector, {
+      through: "Sector_Combustible",
+    });
   };
 
   return CombustibleMaterial;
