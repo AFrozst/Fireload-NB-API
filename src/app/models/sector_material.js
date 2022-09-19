@@ -4,9 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   const Sector_Material = sequelize.define(
     "Sector_Material",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       weight: {
         type: DataTypes.DOUBLE,
-        allowNull: false,
         defaultValue: 0.0,
       },
       totalCalorificValue: {

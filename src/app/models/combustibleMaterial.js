@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     CombustibleMaterial.belongsToMany(models.FireSector, {
       as: "sectors",
-      through: "sector_material",
+      through: "Sector_Material",
       foreignKey: "material_id",
     });
   };

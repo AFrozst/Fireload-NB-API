@@ -25,4 +25,12 @@ router.delete(
   FireSectorController.deleteFireSector
 );
 
+router.post(
+  routes.institutions.institutionId +
+    routes.fireSectors.url +
+    routes.id +
+    routes.combustibleMaterials.url,
+  FireSectorController.addCombustibleMaterial
+);
+
 module.exports = router;
