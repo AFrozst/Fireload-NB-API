@@ -1,6 +1,8 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
-  const FireSector = sequelize.define(
-    "FireSector",
+  const Firesector = sequelize.define(
+    "Firesector",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -8,12 +10,28 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: DataTypes.STRING,
-      area: DataTypes.DOUBLE,
-      description: DataTypes.STRING,
-      observations: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      area: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+      },
+      observations: {
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
       totalFireload: {
         type: DataTypes.DOUBLE,
         allowNull: false,
@@ -29,19 +47,23 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false,
+      tableName: "firesectors",
     }
   );
 
-  FireSector.associate = (models) => {
-    FireSector.belongsTo(models.Institution, {
-      foreignKey: "institutionId",
+  Firesector.associate = function (models) {
+    // associations can be defined here
+    Firesector.belongsTo(models.Institution, {
       as: "institution",
-    })
-    FireSector.belongsToMany(models.CombustibleMaterial, {
-      through: "Sector_Combustible",
+      foreignKey: "institutionId",
+    });
+
+    Firesector.belongsToMany(models.Combustiblematerial, {
+      as: "materials",
+      through: "sector_material",
+      foreignKey: "sector_id",
     });
   };
 
-  return FireSector;
+  return Firesector;
 };

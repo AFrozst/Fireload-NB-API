@@ -1,18 +1,16 @@
-const { FireSector, Institution } = require("../models");
+const {
+  Firesector,
+  Institution,
+  Combustiblematerial,
+} = require("../models/index");
 
 const FireSectorController = {
   getFireSectorsByInstitutionId: async (req, res) => {
     try {
       const { institutionId } = req.params;
-      let fireSectors = await FireSector.findAll({
+      let fireSectors = await Firesector.findAll({
         where: { institutionId },
-        include: {
-          model: Institution,
-          as: "institution",
-          attributes: ["fullName"],
-        },
-        raw: true,
-        nest: true,
+        include: ["institution", "materials"],
       });
       return res.status(200).send({
         data: fireSectors,
@@ -20,23 +18,27 @@ const FireSectorController = {
     } catch (error) {
       const status = error.status || 500;
       const errorMessage = error.message || "Unknown error";
-      response.status(status).send({ errorMessage });
+      res.status(status).send({ errorMessage });
     }
   },
 
   getFireSectorById: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await FireSector.findOne({
+      let fireSector = await Firesector.findOne({
         where: { id, institutionId },
-        include: {
-          model: Institution,
-          as: "institution",
-          attributes: ["fullName"],
-        },
-        raw: true,
-        nest: true,
+        include: [
+          {
+            model: Institution,
+            as: "institution",
+          },
+          {
+            model: Combustiblematerial,
+            as: "materials",
+          },
+        ],
       });
+      console.log(fireSector);
       if (!fireSector) {
         return res.status(404).send({
           errorMessage: "Fire Sector not found",
@@ -48,14 +50,14 @@ const FireSectorController = {
     } catch (error) {
       const status = error.status || 500;
       const errorMessage = error.message || "Unknown error";
-      response.status(status).send({ errorMessage });
+      res.status(status).send({ errorMessage });
     }
   },
 
   createFireSector: async (req, res) => {
     try {
       const { institutionId } = req.params;
-      let newFireSector = await FireSector.create({
+      let newFireSector = await Firesector.create({
         ...req.body,
         institutionId,
       });
@@ -77,7 +79,7 @@ const FireSectorController = {
   updateFireSector: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await FireSector.findOne({
+      let fireSector = await Firesector.findOne({
         where: { id, institutionId },
       });
       if (!fireSector) {
@@ -100,7 +102,7 @@ const FireSectorController = {
   deleteFireSector: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await FireSector.findOne({
+      let fireSector = await Firesector.findOne({
         where: { id, institutionId },
       });
       if (!fireSector) {

@@ -1,6 +1,8 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
-  const CombustibleMaterial = sequelize.define(
-    "CombustibleMaterial",
+  const Combustiblematerial = sequelize.define(
+    "Combustiblematerial",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -8,21 +10,32 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: DataTypes.STRING,
-      heatValue: DataTypes.DOUBLE,
-      heatValue2: DataTypes.DOUBLE,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      heatValue: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      heatValue2: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
     },
     {
-      timestamps: false,
+      tableName: "combustiblematerials",
     }
   );
 
-  CombustibleMaterial.associate = function (models) {
+  Combustiblematerial.associate = function (models) {
     // associations can be defined here
-    CombustibleMaterial.belongsToMany(models.FireSector, {
-      through: "Sector_Combustible",
+    Combustiblematerial.belongsToMany(models.Firesector, {
+      as: "sectors",
+      through: "sector_material",
+      foreignKey: "material_id",
     });
   };
 
-  return CombustibleMaterial;
+  return Combustiblematerial;
 };

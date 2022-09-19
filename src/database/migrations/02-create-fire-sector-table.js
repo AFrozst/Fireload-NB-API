@@ -1,13 +1,12 @@
 "use strict";
-
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("FireSectors", {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("firesectors", {
       id: {
-        type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
       },
       name: {
         type: Sequelize.STRING,
@@ -24,13 +23,13 @@ module.exports = {
         type: Sequelize.STRING,
       },
       createdAt: {
-        type: Sequelize.DATEONLY,
         allowNull: false,
+        type: Sequelize.DATEONLY,
         defaultValue: Sequelize.fn("now"),
       },
       updatedAt: {
-        type: Sequelize.DATEONLY,
         allowNull: false,
+        type: Sequelize.DATEONLY,
         defaultValue: Sequelize.fn("now"),
       },
       totalFireload: {
@@ -50,7 +49,7 @@ module.exports = {
       },
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("FireSectors");
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("firesectors");
   },
 };
