@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 
 router.get("/", (req, res) => {
-  res.send("Welcome Fireload NB");
+  res.json({ message: "Welcome Fireload NB" });
 });
 
 module.exports = router;

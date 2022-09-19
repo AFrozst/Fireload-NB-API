@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const Institution = sequelize.define(
     "Institution",
@@ -26,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
   Institution.associate = (models) => {
     Institution.hasMany(models.FireSector, {
+      as: "firesectors",
       foreignKey: "institutionId",
-      as: "fireSectors",
     });
   };
 

@@ -6,7 +6,7 @@ const cors = require("cors");
 
 const ROUTE_URL = "/api";
 const routes = require("./resources/routes");
-const routesWelcome = require("./routes/index");
+const routesWelcome = require("./routes/index.routes");
 const institutionRoutes = require("./routes/institution.routes");
 const fireSectorRoutes = require("./routes/fireSector.routes");
 const combustibleMaterialRoutes = require("./routes/combustibleMaterial.routes");

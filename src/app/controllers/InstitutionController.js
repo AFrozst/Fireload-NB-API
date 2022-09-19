@@ -1,3 +1,5 @@
+"use strict";
+
 const { Institution } = require("../models");
 
 const InstitutionController = {

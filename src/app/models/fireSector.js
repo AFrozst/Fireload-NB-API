@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const FireSector = sequelize.define(
     "FireSector",
@@ -8,12 +10,28 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: DataTypes.STRING,
-      area: DataTypes.DOUBLE,
-      description: DataTypes.STRING,
-      observations: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      area: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+      },
+      observations: {
+        type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
       totalFireload: {
         type: DataTypes.DOUBLE,
         allowNull: false,
@@ -29,17 +47,21 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      timestamps: false,
+      tableName: "FireSectors",
     }
   );
 
-  FireSector.associate = (models) => {
+  FireSector.associate = function (models) {
+    // associations can be defined here
     FireSector.belongsTo(models.Institution, {
-      foreignKey: "institutionId",
       as: "institution",
-    })
+      foreignKey: "institutionId",
+    });
+
     FireSector.belongsToMany(models.CombustibleMaterial, {
-      through: "Sector_Combustible",
+      as: "materials",
+      through: "sector_material",
+      foreignKey: "sector_id",
     });
   };
 

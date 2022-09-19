@@ -1,4 +1,6 @@
-const { FireSector, Institution } = require("../models");
+"use strict";
+
+const { FireSector, Institution, CombustibleMaterial } = require("../models");
 
 const FireSectorController = {
   getFireSectorsByInstitutionId: async (req, res) => {
@@ -6,13 +8,7 @@ const FireSectorController = {
       const { institutionId } = req.params;
       let fireSectors = await FireSector.findAll({
         where: { institutionId },
-        include: {
-          model: Institution,
-          as: "institution",
-          attributes: ["fullName"],
-        },
-        raw: true,
-        nest: true,
+        include: ["institution"],
       });
       return res.status(200).send({
         data: fireSectors,
@@ -20,7 +16,7 @@ const FireSectorController = {
     } catch (error) {
       const status = error.status || 500;
       const errorMessage = error.message || "Unknown error";
-      response.status(status).send({ errorMessage });
+      res.status(status).send({ errorMessage });
     }
   },
 
@@ -29,13 +25,19 @@ const FireSectorController = {
       const { institutionId, id } = req.params;
       let fireSector = await FireSector.findOne({
         where: { id, institutionId },
-        include: {
-          model: Institution,
-          as: "institution",
-          attributes: ["fullName"],
-        },
-        raw: true,
-        nest: true,
+        include: [
+          {
+            model: Institution,
+            as: "institution",
+          },
+          {
+            model: CombustibleMaterial,
+            as: "materials",
+            through: {
+              attributes: ["weight", "totalCalorificValue"],
+            },
+          },
+        ],
       });
       if (!fireSector) {
         return res.status(404).send({
@@ -48,7 +50,7 @@ const FireSectorController = {
     } catch (error) {
       const status = error.status || 500;
       const errorMessage = error.message || "Unknown error";
-      response.status(status).send({ errorMessage });
+      res.status(status).send({ errorMessage });
     }
   },
 

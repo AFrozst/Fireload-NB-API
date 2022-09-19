@@ -1,4 +1,5 @@
 "use strict";
+
 const { CombustibleMaterial } = require("../models");
 
 const CombustibleMaterialController = {
