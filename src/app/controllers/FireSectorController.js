@@ -33,9 +33,9 @@ const FireSectorController = {
           {
             model: CombustibleMaterial,
             as: "materials",
-            through: {
-              attributes: ["weight", "totalCalorificValue"],
-            },
+            //through: {
+              //attributes: ["weight", "totalCalorificValue"],
+            //},
           },
         ],
       });
@@ -113,6 +113,41 @@ const FireSectorController = {
       fireSector.destroy();
       return res.status(200).send({
         message: "Fire Sector deleted successfully",
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      res.status(status).send({ errorMessage });
+    }
+  },
+
+  addCombustibleMaterial: async (req, res) => {
+    try {
+      const { institutionId, id } = req.params;
+      let fireSector = await FireSector.findOne({
+        where: { id, institutionId },
+      });
+      if (!fireSector) {
+        return res.status(404).send({
+          errorMessage: "Institution or Fire Sector not found",
+        });
+      }
+
+      let material = await CombustibleMaterial.findByPk(req.body.materialId);
+      if (!material) {
+        return res.status(404).send({
+          errorMessage: "Combustible Material not found",
+        });
+      }
+
+      console.log(req.body);
+      let { materialId, weight, totalCalorificValue } = req.body;
+
+      await fireSector.addMaterial(materialId, {
+        through: { weight, totalCalorificValue },
+      });
+      return res.status(200).send({
+        message: "Combustible material added successfully",
       });
     } catch (error) {
       const status = error.status || 500;

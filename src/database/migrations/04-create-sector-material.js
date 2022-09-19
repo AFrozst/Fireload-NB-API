@@ -12,6 +12,7 @@ module.exports = {
       weight: {
         type: Sequelize.DOUBLE,
         allowNull: false,
+        defaultValue: 0.0,
       },
       totalCalorificValue: {
         type: Sequelize.DOUBLE,
@@ -37,10 +38,12 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
     });
   },
