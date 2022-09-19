@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Institution.associate = (models) => {
-    Institution.hasMany(models.Firesector, {
+    Institution.hasMany(models.FireSector, {
       as: "firesectors",
       foreignKey: "institutionId",
     });

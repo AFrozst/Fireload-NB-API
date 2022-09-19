@@ -1,16 +1,14 @@
-const {
-  Firesector,
-  Institution,
-  Combustiblematerial,
-} = require("../models/index");
+"use strict";
+
+const { FireSector, Institution, CombustibleMaterial } = require("../models");
 
 const FireSectorController = {
   getFireSectorsByInstitutionId: async (req, res) => {
     try {
       const { institutionId } = req.params;
-      let fireSectors = await Firesector.findAll({
+      let fireSectors = await FireSector.findAll({
         where: { institutionId },
-        include: ["institution", "materials"],
+        include: ["institution"],
       });
       return res.status(200).send({
         data: fireSectors,
@@ -25,7 +23,7 @@ const FireSectorController = {
   getFireSectorById: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await Firesector.findOne({
+      let fireSector = await FireSector.findOne({
         where: { id, institutionId },
         include: [
           {
@@ -33,12 +31,14 @@ const FireSectorController = {
             as: "institution",
           },
           {
-            model: Combustiblematerial,
+            model: CombustibleMaterial,
             as: "materials",
+            through: {
+              attributes: ["weight", "totalCalorificValue"],
+            },
           },
         ],
       });
-      console.log(fireSector);
       if (!fireSector) {
         return res.status(404).send({
           errorMessage: "Fire Sector not found",
@@ -57,7 +57,7 @@ const FireSectorController = {
   createFireSector: async (req, res) => {
     try {
       const { institutionId } = req.params;
-      let newFireSector = await Firesector.create({
+      let newFireSector = await FireSector.create({
         ...req.body,
         institutionId,
       });
@@ -79,7 +79,7 @@ const FireSectorController = {
   updateFireSector: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await Firesector.findOne({
+      let fireSector = await FireSector.findOne({
         where: { id, institutionId },
       });
       if (!fireSector) {
@@ -102,7 +102,7 @@ const FireSectorController = {
   deleteFireSector: async (req, res) => {
     try {
       const { institutionId, id } = req.params;
-      let fireSector = await Firesector.findOne({
+      let fireSector = await FireSector.findOne({
         where: { id, institutionId },
       });
       if (!fireSector) {

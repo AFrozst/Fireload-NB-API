@@ -1,7 +1,8 @@
 "use strict";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("firesectors", [
+    await queryInterface.bulkInsert("FireSectors", [
       {
         name: "Sector 1",
         area: 100,
@@ -84,7 +85,8 @@ module.exports = {
       },
     ]);
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("firesectors", null, {});
+    await queryInterface.bulkDelete("FireSectors", null, {});
   },
 };

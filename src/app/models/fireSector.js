@@ -1,8 +1,8 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const Firesector = sequelize.define(
-    "Firesector",
+  const FireSector = sequelize.define(
+    "FireSector",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -47,23 +47,23 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "firesectors",
+      tableName: "FireSectors",
     }
   );
 
-  Firesector.associate = function (models) {
+  FireSector.associate = function (models) {
     // associations can be defined here
-    Firesector.belongsTo(models.Institution, {
+    FireSector.belongsTo(models.Institution, {
       as: "institution",
       foreignKey: "institutionId",
     });
 
-    Firesector.belongsToMany(models.Combustiblematerial, {
+    FireSector.belongsToMany(models.CombustibleMaterial, {
       as: "materials",
       through: "sector_material",
       foreignKey: "sector_id",
     });
   };
 
-  return Firesector;
+  return FireSector;
 };

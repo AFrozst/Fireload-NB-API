@@ -1,4 +1,5 @@
 "use strict";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("sector_material", {
@@ -21,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "firesectors",
+          model: "FireSectors",
           key: "id",
         },
       },
@@ -29,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "combustiblematerials",
+          model: "CombustibleMaterials",
           key: "id",
         },
       },

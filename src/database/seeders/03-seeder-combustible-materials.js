@@ -1,7 +1,8 @@
 "use strict";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert("combustiblematerials", [
+    await queryInterface.bulkInsert("CombustibleMaterials", [
       {
         name: "Aceite de algodón",
         heatValue: 9.0,
@@ -114,7 +115,8 @@ module.exports = {
       },
     ]);
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("combustiblematerials", null, {});
+    await queryInterface.bulkDelete("CombustibleMaterials", null, {});
   },
 };
