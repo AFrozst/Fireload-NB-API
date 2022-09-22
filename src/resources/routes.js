@@ -1,4 +1,4 @@
-"use strict" ;
+"use strict";
 
 module.exports = {
   empty: "",
@@ -11,8 +11,8 @@ module.exports = {
     url: "/fireSectors",
     fireSectorId: "/:fireSectorId",
   },
-  combustibleMaterials: {
-    url: "/combustibleMaterials",
-    combustibleMaterialId: "/:combustibleMaterialId",
+  materials: {
+    url: "/materials",
+    materialId: "/:materialId",
   },
 };
