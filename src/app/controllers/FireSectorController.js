@@ -1,6 +1,11 @@
 "use strict";
 
-const { FireSector, Institution, CombustibleMaterial } = require("../models");
+const {
+  FireSector,
+  Institution,
+  CombustibleMaterial,
+  Sector_Material,
+} = require("../models");
 
 const FireSectorController = {
   getFireSectorsByInstitutionId: async (req, res) => {
@@ -34,7 +39,7 @@ const FireSectorController = {
             model: CombustibleMaterial,
             as: "materials",
             //through: {
-              //attributes: ["weight", "totalCalorificValue"],
+            //attributes: ["weight", "totalCalorificValue"],
             //},
           },
         ],
@@ -127,27 +132,79 @@ const FireSectorController = {
       let fireSector = await FireSector.findOne({
         where: { id, institutionId },
       });
+
       if (!fireSector) {
         return res.status(404).send({
           errorMessage: "Institution or Fire Sector not found",
         });
       }
 
-      let material = await CombustibleMaterial.findByPk(req.body.materialId);
+      const material = await CombustibleMaterial.findByPk(req.body.material_id);
       if (!material) {
         return res.status(404).send({
           errorMessage: "Combustible Material not found",
         });
       }
 
-      console.log(req.body);
-      let { materialId, weight, totalCalorificValue } = req.body;
+      const isAdded = await fireSector.hasMaterial(material);
+      if (isAdded) {
+        return res.status(409).send({
+          errorMessage: "Combustible Material already added",
+        });
+      }
 
-      await fireSector.addMaterial(materialId, {
+      let { material_id, weight, totalCalorificValue } = req.body;
+      /*const created = await fireSector.addMaterial(material, {
         through: { weight, totalCalorificValue },
+      });*/
+      await Sector_Material.create({
+        sector_id: id,
+        material_id,
+        weight,
+        totalCalorificValue,
       });
       return res.status(200).send({
-        message: "Combustible material added successfully",
+        message: "Combustible Material added successfully",
+      });
+    } catch (error) {
+      const status = error.status || 500;
+      const errorMessage = error.message || "Unknown error";
+      res.status(status).send({ errorMessage });
+    }
+  },
+
+  removeCombustibleMaterial: async (req, res) => {
+    try {
+      const { institutionId, id, materialId } = req.params;
+      let fireSector = await FireSector.findOne({
+        where: { id, institutionId },
+      });
+
+      if (!fireSector) {
+        return res.status(404).send({
+          errorMessage: "Institution or Fire Sector not found",
+        });
+      }
+
+      const material = await CombustibleMaterial.findByPk(
+        materialId
+      );
+      if (!material) {
+        return res.status(404).send({
+          errorMessage: "Combustible Material not found",
+        });
+      }
+
+      const isAdded = await fireSector.hasMaterial(material);
+      if (!isAdded) {
+        return res.status(409).send({
+          errorMessage: "Combustible Material not added",
+        });
+      }
+
+      await fireSector.removeMaterial(material);
+      return res.status(200).send({
+        message: "Combustible Material removed successfully",
       });
     } catch (error) {
       const status = error.status || 500;

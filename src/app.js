@@ -24,7 +24,7 @@ class Application {
     this.express.use(ROUTE_URL, routesWelcome);
     this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
-    this.express.use(ROUTE_URL + routes.combustibleMaterials.url, combustibleMaterialRoutes);
+    this.express.use(ROUTE_URL + routes.materials.url, combustibleMaterialRoutes);
   }
 
   setUpExpress() {
