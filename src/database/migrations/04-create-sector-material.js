@@ -26,6 +26,8 @@ module.exports = {
           model: "FireSectors",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       material_id: {
         type: Sequelize.INTEGER,
@@ -34,6 +36,8 @@ module.exports = {
           model: "CombustibleMaterials",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       createdAt: {
         allowNull: false,

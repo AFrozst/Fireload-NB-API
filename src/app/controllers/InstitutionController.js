@@ -24,8 +24,7 @@ const InstitutionController = {
       const { id } = req.params;
       let institution = await Institution.findOne({
         where: { id },
-        raw: true,
-        nest: true,
+        include: ["firesectors"],
       });
 
       if (!institution) {
