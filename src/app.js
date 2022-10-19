@@ -2,12 +2,13 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
+//const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const ROUTE_URL = "/api";
 const routes = require("./resources/routes");
 const routesWelcome = require("./routes/index.routes");
+const authRoutes = require("./routes/auth.routes");
 const institutionRoutes = require("./routes/institution.routes");
 const fireSectorRoutes = require("./routes/fireSector.routes");
 const combustibleMaterialRoutes = require("./routes/combustibleMaterial.routes");
@@ -23,6 +24,7 @@ class Application {
 
   setUproutes() {
     this.express.use(ROUTE_URL, routesWelcome);
+    this.express.use(ROUTE_URL + "/auth", authRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
     this.express.use(
@@ -32,9 +34,11 @@ class Application {
   }
 
   setUpExpress() {
-    this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(express.json());
+    this.express.use(express.urlencoded({ extended: false }));
     this.express.use(cors());
+    //this.express.use(bodyParser.json());
+    //this.express.use(bodyParser.urlencoded({ extended: false }));
     //this.express.use(morgan('dev'));
   }
 

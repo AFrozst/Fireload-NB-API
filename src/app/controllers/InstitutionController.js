@@ -3,6 +3,12 @@
 const { Institution } = require("../models");
 
 const InstitutionController = {
+  
+  /**
+   * Obtiene todas las instituciones
+   * @param {*} req 
+   * @param {*} res
+   */
   getInstitutions: async (req, res) => {
     try {
       let institutions = await Institution.findAll({
