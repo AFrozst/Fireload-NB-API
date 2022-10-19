@@ -1,4 +1,5 @@
 "use strict";
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
@@ -24,7 +25,10 @@ class Application {
     this.express.use(ROUTE_URL, routesWelcome);
     this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
-    this.express.use(ROUTE_URL + routes.materials.url, combustibleMaterialRoutes);
+    this.express.use(
+      ROUTE_URL + routes.materials.url,
+      combustibleMaterialRoutes
+    );
   }
 
   setUpExpress() {
