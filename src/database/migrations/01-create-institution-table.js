@@ -23,6 +23,16 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.fn("now"),
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {

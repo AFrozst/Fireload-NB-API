@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
       },
       createdAt: DataTypes.DATE,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: false,
@@ -30,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
     Institution.hasMany(models.FireSector, {
       as: "firesectors",
       foreignKey: "institutionId",
+    });
+
+    Institution.belongsTo(models.User, {
+      as: "user",
+      foreignKey: "userId",
     });
   };
 
