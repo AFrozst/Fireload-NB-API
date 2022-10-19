@@ -1,7 +1,7 @@
 {
   "name": "fireload-nb-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API REST de Fireload NB",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -15,10 +15,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
