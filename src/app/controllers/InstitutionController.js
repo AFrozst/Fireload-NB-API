@@ -49,11 +49,15 @@ const InstitutionController = {
 
   createInstitution: async (req, res) => {
     try {
+      const { user } = req;
+      req.body.userId = user.id;
       req.body.numberFireSectors = 0;
-      let newInstitution = await Institution.create(req.body);
+
+      const institution = await Institution.create(req.body);
+      institution.set("userId", undefined, { strict: false });
       return res.status(201).send({
-        message: "Institution created successfully",
-        data: newInstitution,
+        message: "Institution created succesfully",
+        data: institution,
       });
     } catch (error) {
       handleHttpError(res, error.message);
