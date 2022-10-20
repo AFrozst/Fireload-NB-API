@@ -7,7 +7,6 @@ const {
 const { Institution } = require("../models");
 
 const InstitutionController = {
-  
   /**
    * Obtiene todas las instituciones
    * @param {*} req
@@ -16,12 +15,12 @@ const InstitutionController = {
   getInstitutions: async (req, res) => {
     try {
       const { user } = req;
-      let institutions = await Institution.findAll({
-        raw: true,
-        nest: true,
+      const institutions = await Institution.findAll({
+        where: {
+          userId: user.id,
+        },
       });
       return res.status(200).send({
-        user,
         data: institutions,
       });
     } catch (error) {
