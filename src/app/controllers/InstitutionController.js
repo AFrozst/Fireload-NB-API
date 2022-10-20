@@ -7,7 +7,6 @@ const {
 const { Institution } = require("../models");
 
 const InstitutionController = {
-  
   /**
    * Obtiene todas las instituciones
    * @param {*} req
@@ -16,12 +15,12 @@ const InstitutionController = {
   getInstitutions: async (req, res) => {
     try {
       const { user } = req;
-      let institutions = await Institution.findAll({
-        raw: true,
-        nest: true,
+      const institutions = await Institution.findAll({
+        where: {
+          userId: user.id,
+        },
       });
       return res.status(200).send({
-        user,
         data: institutions,
       });
     } catch (error) {
@@ -50,11 +49,15 @@ const InstitutionController = {
 
   createInstitution: async (req, res) => {
     try {
+      const { user } = req;
+      req.body.userId = user.id;
       req.body.numberFireSectors = 0;
-      let newInstitution = await Institution.create(req.body);
+
+      const institution = await Institution.create(req.body);
+      institution.set("userId", undefined, { strict: false });
       return res.status(201).send({
-        message: "Institution created successfully",
-        data: newInstitution,
+        message: "Institution created succesfully",
+        data: institution,
       });
     } catch (error) {
       handleHttpError(res, error.message);
