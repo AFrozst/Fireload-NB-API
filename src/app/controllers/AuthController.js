@@ -1,3 +1,5 @@
+"use strict";
+
 const { matchedData } = require("express-validator");
 const { encrypt, compare } = require("../../utils/handlePassword");
 const { tokenSign } = require("../../utils/handleJwt");
@@ -26,12 +28,42 @@ const registerController = async (req, res) => {
     const user = await User.create(newUser);
     user.set("password", undefined, { strict: false });
 
+    return res.status(201).send({
+      message: "User created successfully",
+      user,
+    });
+  } catch (error) {
+    handleHttpError(res, error.message);
+  }
+};
+
+/**
+ * Login a user
+ * @param {*} req
+ * @param {*} res
+ */
+const loginController = async (req, res) => {
+  try {
+    const data = matchedData(req);
+    const user = await User.findOne({ where: { email: data.email } });
+
+    if (!user) {
+      return handleHttpErrorResponse(res, "Credentials are not correct", 400);
+    }
+
+    const isMatch = await compare(data.password, user.password);
+    if (!isMatch) {
+      return handleHttpErrorResponse(res, "Credentials are not correct", 400);
+    }
+    user.set("password", undefined, { strict: false });
+
     const dataSend = {
       token: await tokenSign(user),
       user,
     };
-    return res.status(201).send({
-      message: "User created successfully",
+
+    return res.status(200).send({
+      message: "User logged in successfully",
       data: dataSend,
     });
   } catch (error) {
@@ -39,4 +71,4 @@ const registerController = async (req, res) => {
   }
 };
 
-module.exports = { registerController };
+module.exports = { registerController, loginController };

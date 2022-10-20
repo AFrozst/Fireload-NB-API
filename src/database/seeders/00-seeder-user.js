@@ -1,16 +1,17 @@
 "use strict";
+const { encrypt } = require("../../utils/handlePassword");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert("Users", [
       {
         email: "frozst@gmail.com",
-        password: "123456",
+        password: await encrypt("123456"),
         name: "Frozst",
       },
       {
         email: "admin@gmail.com",
-        password: "123456",
+        password: await encrypt("123456"),
         name: "Admin",
       },
     ]);
