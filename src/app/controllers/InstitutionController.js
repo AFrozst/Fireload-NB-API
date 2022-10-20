@@ -1,12 +1,16 @@
 "use strict";
 
+const {
+  handleHttpErrorResponse,
+  handleHttpError,
+} = require("../../utils/handleError");
 const { Institution } = require("../models");
 
 const InstitutionController = {
   
   /**
    * Obtiene todas las instituciones
-   * @param {*} req 
+   * @param {*} req
    * @param {*} res
    */
   getInstitutions: async (req, res) => {
@@ -19,9 +23,7 @@ const InstitutionController = {
         data: institutions,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -34,17 +36,13 @@ const InstitutionController = {
       });
 
       if (!institution) {
-        return res.status(404).send({
-          errorMessage: "Institution not found",
-        });
+        return handleHttpErrorResponse(res, "Institution not found", 404);
       }
       return res.status(200).send({
         data: institution,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -57,9 +55,7 @@ const InstitutionController = {
         data: newInstitution,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -72,10 +68,9 @@ const InstitutionController = {
         nest: true,
       });
       if (!institution) {
-        return res.status(404).send({
-          errorMessage: "Institution not found",
-        });
+        return handleHttpErrorResponse(res, "Institution not found", 404);
       }
+
       await Institution.update(req.body, {
         where: { id },
       });
@@ -83,9 +78,7 @@ const InstitutionController = {
         message: "Institution updated successfully",
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -96,17 +89,14 @@ const InstitutionController = {
         where: { id },
       });
       if (institutionDeleted === 0) {
-        return res.status(404).send({
-          errorMessage: "Institution not found",
-        });
+        return handleHttpErrorResponse(res, "Institution not found", 404);
       }
+
       return res.status(200).send({
         message: "Institution deleted successfully",
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 };

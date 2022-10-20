@@ -1,4 +1,4 @@
-const handleHttpError = (res, error, ) => {
+const handleHttpError = (res, error ) => {
   const status = 500;
   const errorMessage = error || "Internal Server Error";
   return res.status(status).send({ error: errorMessage });
