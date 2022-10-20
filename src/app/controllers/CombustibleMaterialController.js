@@ -24,7 +24,6 @@ const CombustibleMaterialController = {
   getCombustibleMaterial: async (req, res) => {
     try {
       const { id } = req.params;
-      console.log(req);
       let combustibleMaterial = await CombustibleMaterial.findOne({
         where: { id },
         raw: true,
