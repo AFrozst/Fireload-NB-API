@@ -1,5 +1,9 @@
 "use strict";
 
+const {
+  handleHttpErrorResponse,
+  handleHttpError,
+} = require("../../utils/handleError");
 const { CombustibleMaterial } = require("../models");
 
 const CombustibleMaterialController = {
@@ -13,9 +17,7 @@ const CombustibleMaterialController = {
         data: combustibleMaterials,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -30,17 +32,13 @@ const CombustibleMaterialController = {
       });
 
       if (!combustibleMaterial) {
-        return res.status(404).send({
-          errorMessage: "Combustible Material not found",
-        });
+        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
       }
       return res.status(200).send({
         data: combustibleMaterial,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Internal Server Error";
-      return res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 };

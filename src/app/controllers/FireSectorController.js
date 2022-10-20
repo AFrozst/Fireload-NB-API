@@ -1,6 +1,10 @@
 "use strict";
 
 const {
+  handleHttpErrorResponse,
+  handleHttpError,
+} = require("../../utils/handleError");
+const {
   FireSector,
   Institution,
   CombustibleMaterial,
@@ -19,9 +23,7 @@ const FireSectorController = {
         data: fireSectors,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -45,17 +47,14 @@ const FireSectorController = {
         ],
       });
       if (!fireSector) {
-        return res.status(404).send({
-          errorMessage: "Fire Sector not found",
-        });
+        return handleHttpErrorResponse(res, "FireSector not found", 404);
       }
+
       return res.status(200).send({
         data: fireSector,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -75,9 +74,7 @@ const FireSectorController = {
         data: newFireSector,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -88,19 +85,16 @@ const FireSectorController = {
         where: { id, institutionId },
       });
       if (!fireSector) {
-        return res.status(404).send({
-          errorMessage: "Institution or Fire Sector not found",
-        });
+        return handleHttpErrorResponse(res, "FireSector not found", 404);
       }
+
       fireSector.update({ ...req.body, update: new Date() });
       return res.status(200).send({
         message: "Fire Sector updated successfully",
         data: fireSector,
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -111,18 +105,15 @@ const FireSectorController = {
         where: { id, institutionId },
       });
       if (!fireSector) {
-        return res.status(404).send({
-          errorMessage: "Institution or Fire Sector not found",
-        });
+        return handleHttpErrorResponse(res, "FireSector not found", 404);
       }
+
       fireSector.destroy();
       return res.status(200).send({
         message: "Fire Sector deleted successfully",
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -134,23 +125,17 @@ const FireSectorController = {
       });
 
       if (!fireSector) {
-        return res.status(404).send({
-          errorMessage: "Institution or Fire Sector not found",
-        });
+        return handleHttpErrorResponse(res, "FireSector not found", 404);
       }
 
       const material = await CombustibleMaterial.findByPk(req.body.material_id);
       if (!material) {
-        return res.status(404).send({
-          errorMessage: "Combustible Material not found",
-        });
+        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
       }
 
       const isAdded = await fireSector.hasMaterial(material);
       if (isAdded) {
-        return res.status(409).send({
-          errorMessage: "Combustible Material already added",
-        });
+        return handleHttpErrorResponse(res, "Combustible Material already added", 409);
       }
 
       let { material_id, weight, totalCalorificValue } = req.body;
@@ -167,9 +152,7 @@ const FireSectorController = {
         message: "Combustible Material added successfully",
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 
@@ -181,25 +164,17 @@ const FireSectorController = {
       });
 
       if (!fireSector) {
-        return res.status(404).send({
-          errorMessage: "Institution or Fire Sector not found",
-        });
+        return handleHttpErrorResponse(res, "FireSector not found", 404);
       }
 
-      const material = await CombustibleMaterial.findByPk(
-        materialId
-      );
+      const material = await CombustibleMaterial.findByPk(materialId);
       if (!material) {
-        return res.status(404).send({
-          errorMessage: "Combustible Material not found",
-        });
+        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
       }
 
       const isAdded = await fireSector.hasMaterial(material);
       if (!isAdded) {
-        return res.status(409).send({
-          errorMessage: "Combustible Material not added",
-        });
+        return handleHttpErrorResponse(res, "Combustible Material not added", 409);
       }
 
       await fireSector.removeMaterial(material);
@@ -207,9 +182,7 @@ const FireSectorController = {
         message: "Combustible Material removed successfully",
       });
     } catch (error) {
-      const status = error.status || 500;
-      const errorMessage = error.message || "Unknown error";
-      res.status(status).send({ errorMessage });
+      handleHttpError(res, error.message);
     }
   },
 };
