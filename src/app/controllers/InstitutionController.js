@@ -15,11 +15,13 @@ const InstitutionController = {
    */
   getInstitutions: async (req, res) => {
     try {
+      const { user } = req;
       let institutions = await Institution.findAll({
         raw: true,
         nest: true,
       });
       return res.status(200).send({
+        user,
         data: institutions,
       });
     } catch (error) {
