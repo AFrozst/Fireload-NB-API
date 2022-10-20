@@ -1,9 +1,9 @@
 "use strict";
 require("dotenv").config();
 const express = require("express");
-const morgan = require("morgan");
-//const bodyParser = require("body-parser");
 const cors = require("cors");
+//const morgan = require("morgan");
+//const bodyParser = require("body-parser");
 
 const ROUTE_URL = "/api";
 const routes = require("./resources/routes");
@@ -24,7 +24,7 @@ class Application {
 
   setUproutes() {
     this.express.use(ROUTE_URL, routesWelcome);
-    this.express.use(ROUTE_URL + "/auth", authRoutes);
+    this.express.use(ROUTE_URL + routes.auth.url, authRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
     this.express.use(

@@ -1,14 +1,11 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const { validateRegister } = require("../validators/auth");
-const { registerController } = require("../app/controllers/AuthController");
+const { validateRegister, validateLogin } = require("../validators/auth");
+const { registerController, loginController } = require("../app/controllers/AuthController");
+const routes = require("../resources/routes");
 
-/**
- *
- */
-// TODO http://localhost:5000/api/auth/login
-// TODO http://localhost:5000/api/auth/register
-router.post("/register", validateRegister, registerController);
+router.post(routes.auth.register, validateRegister, registerController);
+router.post(routes.auth.login, validateLogin, loginController);
 
 module.exports = router;
