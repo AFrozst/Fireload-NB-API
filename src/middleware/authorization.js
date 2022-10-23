@@ -14,7 +14,7 @@ const checkAuthorizationAction = async (req, res, next) => {
     if (!institution || institution.userId !== user.id) {
       return handleHttpErrorResponse(
         res,
-        "You are not authorized to perform this action",
+        "No tiene permisos para realizar esta acción",
         403
       );
     }

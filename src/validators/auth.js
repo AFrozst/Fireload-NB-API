@@ -4,25 +4,25 @@ const { validateResult } = require("../utils/handleValidator");
 const validateRegister = [
   check("name")
     .exists()
-    .withMessage("Name is required")
+    .withMessage("El campo nombre es requerido")
     .notEmpty()
-    .withMessage("Name is cannot be blank")
+    .withMessage("El campo nombre no puede estar vacío")
     .isLength({ min: 3, max: 50 })
-    .withMessage("Name must be between 3 and 50 characters"),
+    .withMessage("El campo nombre debe tener entre 3 y 50 caracteres"),
   check("email")
     .exists()
-    .withMessage("Email is required")
+    .withMessage("El campo email es requerido")
     .notEmpty()
-    .withMessage("Email is cannot be blank")
+    .withMessage("El campo email no puede estar vacío")
     .isEmail()
-    .withMessage("Email must be valid email address"),
+    .withMessage("El campo email debe ser un email válido"),
   check("password")
     .exists()
-    .withMessage("Password is required")
+    .withMessage("El campo contraseña es requerido")
     .notEmpty()
-    .withMessage("Password is cannot be blank")
+    .withMessage("El campo contraseña no puede estar vacío")
     .isLength({ min: 6, max: 15 })
-    .withMessage("Password must be between 6 and 15 characters"),
+    .withMessage("El campo contraseña debe tener entre 6 y 15 caracteres"),
   (req, res, next) => {
     validateResult(req, res, next);
   },
@@ -31,18 +31,16 @@ const validateRegister = [
 const validateLogin = [
   check("email")
     .exists()
-    .withMessage("Email is required")
+    .withMessage("El campo email es requerido")
     .notEmpty()
-    .withMessage("Email is cannot be blank")
+    .withMessage("El campo email no puede estar vacío")
     .isEmail()
-    .withMessage("Email must be valid email address"),
+    .withMessage("El campo email debe ser un email válido"),
   check("password")
     .exists()
-    .withMessage("Password is required")
+    .withMessage("El campo contraseña es requerido")
     .notEmpty()
-    .withMessage("Password is cannot be blank")
-    .isLength({ min: 6, max: 15 })
-    .withMessage("Password must be between 6 and 15 characters"),
+    .withMessage("El campo contraseña no puede estar vacío"),
   (req, res, next) => {
     return validateResult(req, res, next);
   },

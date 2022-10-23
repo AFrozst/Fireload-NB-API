@@ -47,7 +47,11 @@ const FireSectorController = {
         ],
       });
       if (!fireSector) {
-        return handleHttpErrorResponse(res, "FireSector not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Sector de incendio no encontrado",
+          404
+        );
       }
 
       return res.status(200).send({
@@ -70,7 +74,7 @@ const FireSectorController = {
       institution.save();
 
       return res.status(201).send({
-        message: "FireSector created successfully",
+        message: "Sector de incendio creado correctamente",
         data: newFireSector,
       });
     } catch (error) {
@@ -85,12 +89,16 @@ const FireSectorController = {
         where: { id, institutionId },
       });
       if (!fireSector) {
-        return handleHttpErrorResponse(res, "FireSector not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Sector de incendio no encontrado",
+          404
+        );
       }
 
       fireSector.update({ ...req.body, update: new Date() });
       return res.status(200).send({
-        message: "Fire Sector updated successfully",
+        message: "Sector de incendio actualizado correctamente",
         data: fireSector,
       });
     } catch (error) {
@@ -105,12 +113,16 @@ const FireSectorController = {
         where: { id, institutionId },
       });
       if (!fireSector) {
-        return handleHttpErrorResponse(res, "FireSector not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Sector de incendio no encontrado",
+          404
+        );
       }
 
       fireSector.destroy();
       return res.status(200).send({
-        message: "Fire Sector deleted successfully",
+        message: "Sector de incendio eliminado correctamente",
       });
     } catch (error) {
       handleHttpError(res, error.message);
@@ -125,17 +137,29 @@ const FireSectorController = {
       });
 
       if (!fireSector) {
-        return handleHttpErrorResponse(res, "FireSector not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Sector de incendio no encontrado",
+          404
+        );
       }
 
       const material = await CombustibleMaterial.findByPk(req.body.material_id);
       if (!material) {
-        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Material combustible no encontrado",
+          404
+        );
       }
 
       const isAdded = await fireSector.hasMaterial(material);
       if (isAdded) {
-        return handleHttpErrorResponse(res, "Combustible Material already added", 409);
+        return handleHttpErrorResponse(
+          res,
+          "El material combustible ya fue agregado al sector de incendio",
+          409
+        );
       }
 
       let { material_id, weight, totalCalorificValue } = req.body;
@@ -149,7 +173,7 @@ const FireSectorController = {
         totalCalorificValue,
       });
       return res.status(200).send({
-        message: "Combustible Material added successfully",
+        message: "Material combustible agregado correctamente",
       });
     } catch (error) {
       handleHttpError(res, error.message);
@@ -164,22 +188,34 @@ const FireSectorController = {
       });
 
       if (!fireSector) {
-        return handleHttpErrorResponse(res, "FireSector not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Sector de incendio no encontrado",
+          404
+        );
       }
 
       const material = await CombustibleMaterial.findByPk(materialId);
       if (!material) {
-        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Material combustible no encontrado",
+          404
+        );
       }
 
       const isAdded = await fireSector.hasMaterial(material);
       if (!isAdded) {
-        return handleHttpErrorResponse(res, "Combustible Material not added", 409);
+        return handleHttpErrorResponse(
+          res,
+          "El material combustible no fue agregado al sector de incendio",
+          409
+        );
       }
 
       await fireSector.removeMaterial(material);
       return res.status(200).send({
-        message: "Combustible Material removed successfully",
+        message: "Material combustible eliminado correctamente",
       });
     } catch (error) {
       handleHttpError(res, error.message);

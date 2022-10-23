@@ -48,7 +48,7 @@ class Application {
 
   setUpNotFound() {
     this.express.use((req, res, next) => {
-      const error = new Error("Rsouce not found");
+      const error = new Error("Ruta no encontrada");
       err.status = 404;
       next(error);
     });
