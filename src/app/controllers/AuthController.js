@@ -20,7 +20,11 @@ const registerController = async (req, res) => {
     const data = matchedData(req);
     const isExist = await User.findOne({ where: { email: data.email } });
     if (isExist) {
-      return handleHttpErrorResponse(res, "User already exist", 400);
+      return handleHttpErrorResponse(
+        res,
+        "Ya existe un usuario con ese email",
+        400
+      );
     }
 
     const password = await encrypt(data.password);
@@ -29,7 +33,7 @@ const registerController = async (req, res) => {
     user.set("password", undefined, { strict: false });
 
     return res.status(201).send({
-      message: "User created successfully",
+      message: "Usuario creado correctamente",
       user,
     });
   } catch (error) {
@@ -48,12 +52,12 @@ const loginController = async (req, res) => {
     const user = await User.findOne({ where: { email: data.email } });
 
     if (!user) {
-      return handleHttpErrorResponse(res, "Credentials are not correct", 400);
+      return handleHttpErrorResponse(res, "Credenciales incorrectas", 400);
     }
 
     const isMatch = await compare(data.password, user.password);
     if (!isMatch) {
-      return handleHttpErrorResponse(res, "Credentials are not correct", 400);
+      return handleHttpErrorResponse(res, " Credenciales incorrectas", 400);
     }
     user.set("password", undefined, { strict: false });
 
@@ -63,7 +67,7 @@ const loginController = async (req, res) => {
     };
 
     return res.status(200).send({
-      message: "User logged in successfully",
+      message: "Usuario inició sesión correctamente",
       data: dataSend,
     });
   } catch (error) {

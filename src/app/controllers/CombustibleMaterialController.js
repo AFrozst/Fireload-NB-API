@@ -31,7 +31,11 @@ const CombustibleMaterialController = {
       });
 
       if (!combustibleMaterial) {
-        return handleHttpErrorResponse(res, "Combustible Material not found", 404);
+        return handleHttpErrorResponse(
+          res,
+          "Material Combustible no encontrado",
+          404
+        );
       }
       return res.status(200).send({
         data: combustibleMaterial,

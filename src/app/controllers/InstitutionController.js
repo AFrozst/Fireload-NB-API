@@ -37,7 +37,7 @@ const InstitutionController = {
       });
 
       if (!institution) {
-        return handleHttpErrorResponse(res, "Institution not found", 404);
+        return handleHttpErrorResponse(res, "Institución no encontrado", 404);
       }
       return res.status(200).send({
         data: institution,
@@ -56,7 +56,7 @@ const InstitutionController = {
       const institution = await Institution.create(req.body);
       institution.set("userId", undefined, { strict: false });
       return res.status(201).send({
-        message: "Institution created succesfully",
+        message: "Institución creado correctamente",
         data: institution,
       });
     } catch (error) {
@@ -73,14 +73,14 @@ const InstitutionController = {
         nest: true,
       });
       if (!institution) {
-        return handleHttpErrorResponse(res, "Institution not found", 404);
+        return handleHttpErrorResponse(res, "Institución no encontrado", 404);
       }
 
       await Institution.update(req.body, {
         where: { id },
       });
       return res.status(200).send({
-        message: "Institution updated successfully",
+        message: "Institución actualizado correctamente",
       });
     } catch (error) {
       handleHttpError(res, error.message);
@@ -94,11 +94,11 @@ const InstitutionController = {
         where: { id },
       });
       if (institutionDeleted === 0) {
-        return handleHttpErrorResponse(res, "Institution not found", 404);
+        return handleHttpErrorResponse(res, "Institución no encontrado", 404);
       }
 
       return res.status(200).send({
-        message: "Institution deleted successfully",
+        message: "Institución eliminado correctamente",
       });
     } catch (error) {
       handleHttpError(res, error.message);
