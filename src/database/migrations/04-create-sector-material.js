@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
         defaultValue: 0.0,
       },
-      sector_id: {
+      sectorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -34,7 +34,7 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      material_id: {
+      materialId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

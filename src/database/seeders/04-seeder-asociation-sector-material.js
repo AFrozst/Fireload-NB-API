@@ -3,29 +3,29 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("sector_material", [
       {
-        sector_id: 1,
-        material_id: 1,
+        sectorId: 1,
+        materialId: 1,
         weight: 100,
         total: 100,
         ci: 1.5,
       },
       {
-        sector_id: 1,
-        material_id: 2,
+        sectorId: 1,
+        materialId: 2,
         weight: 200,
         total: 200,
         ci: 1.5,
       },
       {
-        sector_id: 1,
-        material_id: 3,
+        sectorId: 1,
+        materialId: 3,
         weight: 300,
         total: 300,
         ci: 1.5,
       },
       {
-        sector_id: 2,
-        material_id: 1,
+        sectorId: 2,
+        materialId: 1,
         weight: 400,
         total: 400,
         ci: 1.5,

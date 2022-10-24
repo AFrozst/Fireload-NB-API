@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0.0,
       },
-      sector_id: {
+      sectorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      material_id: {
+      materialId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

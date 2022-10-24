@@ -149,7 +149,7 @@ const FireSectorController = {
         );
       }
 
-      const material = await CombustibleMaterial.findByPk(req.body.material_id);
+      const material = await CombustibleMaterial.findByPk(req.body.materialId);
       if (!material) {
         return handleHttpErrorResponse(
           res,
@@ -167,13 +167,13 @@ const FireSectorController = {
         );
       }
 
-      let { material_id, weight, total, ci } = req.body;
+      let { materialId, weight, total, ci } = req.body;
       /*const created = await fireSector.addMaterial(material, {
         through: { weight, totalCalorificValue },
       });*/
       await Sector_Material.create({
-        sector_id: id,
-        material_id,
+        sectorId: id,
+        materialId,
         weight,
         total,
         ci,

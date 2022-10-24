@@ -84,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
     FireSector.belongsToMany(models.CombustibleMaterial, {
       as: "materials",
       through: "Sector_Material",
-      foreignKey: "sector_id",
+      foreignKey: "sectorId",
     });
   };
 
