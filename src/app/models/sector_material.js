@@ -12,14 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       weight: {
         type: DataTypes.DOUBLE,
+        allowNull: false,
         defaultValue: 0.0,
       },
-      totalCalorificValue: {
+      total: {
         type: DataTypes.DOUBLE,
         allowNull: false,
         defaultValue: 0.0,
       },
-      sector_id: {
+      ci: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      sectorId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -27,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      material_id: {
+      materialId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

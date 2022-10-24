@@ -13,14 +13,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      location: {
+        type: Sequelize.STRING,
+      },
       numberFireSectors: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         defaultValue: 0,
       },
       createdAt: {
-        type: Sequelize.DATEONLY,
-        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },
       userId: {

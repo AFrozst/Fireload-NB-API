@@ -13,30 +13,53 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      location: {
+        type: Sequelize.STRING,
+      },
       area: {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },
-      description: {
+      environmentDescription: {
+        type: Sequelize.STRING,
+      },
+      activity: {
+        type: Sequelize.STRING,
+      },
+      typeFurniture: {
+        type: Sequelize.STRING,
+      },
+      occupation: {
         type: Sequelize.STRING,
       },
       observations: {
         type: Sequelize.STRING,
       },
-      createdAt: {
+      numberMaterials: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      Ra: {
+        type: Sequelize.DOUBLE,
         allowNull: false,
-        type: Sequelize.DATEONLY,
+      },
+      fireload: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      intrinsicLevel: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "BAJO (1)",
+      },
+      createdAt: {
+        type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },
       updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATEONLY,
+        type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
-      },
-      totalFireload: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
-        defaultValue: 0.0,
       },
       institutionId: {
         type: Sequelize.INTEGER,

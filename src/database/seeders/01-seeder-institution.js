@@ -6,36 +6,36 @@ module.exports = {
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte",
-        numberFireSectors: 2,
-        createdAt: new Date(),
+        location: "Bolivia, Cochabamba, Av. America",
+        numberFireSectors: 3,
         userId: 1,
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Sul",
+        location: "Bolivia, Cochabamba, Av. America",
         numberFireSectors: 2,
-        createdAt: new Date(),
         userId: 1,
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Ceará",
+        location: "Bolivia, Cochabamba, Av. America",
         numberFireSectors: 2,
-        createdAt: new Date(),
         userId: 1,
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Amazonas",
+        location: "Bolivia, Cochabamba, Av. America",
         numberFireSectors: 1,
-        createdAt: new Date(),
         userId: 1,
       },
       {
         fullName:
           "Instituto Federal de Educação, Ciência e Tecnologia do Rio de Janeiro",
+        location: "Bolivia, Cochabamba, Av. America",
         numberFireSectors: 0,
-        createdAt: new Date(),
         userId: 1,
       },
     ]);

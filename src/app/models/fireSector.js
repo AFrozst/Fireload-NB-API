@@ -14,26 +14,51 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      location: {
+        type: DataTypes.STRING,
+      },
       area: {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
-      description: {
+      environmentDescription: {
+        type: DataTypes.STRING,
+      },
+      activity: {
+        type: DataTypes.STRING,
+      },
+      typeFurniture: {
+        type: DataTypes.STRING,
+      },
+      occupation: {
         type: DataTypes.STRING,
       },
       observations: {
         type: DataTypes.STRING,
+      },
+      numberMaterials: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      Ra: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      fireload: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      intrinsicLevel: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "BAJO (1)",
       },
       createdAt: {
         type: DataTypes.DATE,
       },
       updatedAt: {
         type: DataTypes.DATE,
-      },
-      totalFireload: {
-        type: DataTypes.DOUBLE,
-        allowNull: false,
-        defaultValue: 0.0,
       },
       institutionId: {
         type: DataTypes.INTEGER,
@@ -59,7 +84,7 @@ module.exports = (sequelize, DataTypes) => {
     FireSector.belongsToMany(models.CombustibleMaterial, {
       as: "materials",
       through: "Sector_Material",
-      foreignKey: "sector_id",
+      foreignKey: "sectorId",
     });
   };
 

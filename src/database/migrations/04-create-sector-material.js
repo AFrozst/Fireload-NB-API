@@ -14,12 +14,17 @@ module.exports = {
         allowNull: false,
         defaultValue: 0.0,
       },
-      totalCalorificValue: {
+      total: {
         type: Sequelize.DOUBLE,
         allowNull: false,
         defaultValue: 0.0,
       },
-      sector_id: {
+      ci: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      sectorId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -29,7 +34,7 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      material_id: {
+      materialId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -40,12 +45,10 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },
