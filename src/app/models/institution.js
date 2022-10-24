@@ -14,12 +14,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      location: {
+        type: DataTypes.STRING,
+      },
       numberFireSectors: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 0,
       },
-      createdAt: DataTypes.DATE,
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,

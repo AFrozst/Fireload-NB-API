@@ -70,8 +70,9 @@ const FireSectorController = {
         institutionId,
       });
       let institution = await Institution.findByPk(institutionId);
+
       institution.numberFireSectors += 1;
-      institution.save();
+      await institution.save();
 
       return res.status(201).send({
         message: "Sector de incendio creado correctamente",
@@ -96,7 +97,7 @@ const FireSectorController = {
         );
       }
 
-      fireSector.update({ ...req.body, update: new Date() });
+      await fireSector.update({ ...req.body, updatedAt: new Date() });
       return res.status(200).send({
         message: "Sector de incendio actualizado correctamente",
         data: fireSector,
@@ -120,7 +121,11 @@ const FireSectorController = {
         );
       }
 
-      fireSector.destroy();
+      const institution = await Institution.findByPk(institutionId);
+      institution.numberFireSectors -= 1;
+      await institution.save();
+
+      await fireSector.destroy();
       return res.status(200).send({
         message: "Sector de incendio eliminado correctamente",
       });
@@ -162,7 +167,7 @@ const FireSectorController = {
         );
       }
 
-      let { material_id, weight, totalCalorificValue } = req.body;
+      let { material_id, weight, total, ci } = req.body;
       /*const created = await fireSector.addMaterial(material, {
         through: { weight, totalCalorificValue },
       });*/
@@ -170,8 +175,15 @@ const FireSectorController = {
         sector_id: id,
         material_id,
         weight,
-        totalCalorificValue,
+        total,
+        ci,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
+
+      fireSector.numberMaterials += 1;
+      await fireSector.save();
+
       return res.status(200).send({
         message: "Material combustible agregado correctamente",
       });
@@ -212,6 +224,9 @@ const FireSectorController = {
           409
         );
       }
+
+      fireSector.numberMaterials -= 1;
+      await fireSector.save();
 
       await fireSector.removeMaterial(material);
       return res.status(200).send({

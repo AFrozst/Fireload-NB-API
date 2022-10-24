@@ -14,7 +14,12 @@ module.exports = {
         allowNull: false,
         defaultValue: 0.0,
       },
-      totalCalorificValue: {
+      total: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      ci: {
         type: Sequelize.DOUBLE,
         allowNull: false,
         defaultValue: 0.0,
@@ -40,12 +45,10 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn("now"),
       },

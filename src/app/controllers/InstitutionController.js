@@ -69,16 +69,12 @@ const InstitutionController = {
       const { id } = req.params;
       let institution = await Institution.findOne({
         where: { id },
-        raw: true,
-        nest: true,
       });
       if (!institution) {
         return handleHttpErrorResponse(res, "Institución no encontrado", 404);
       }
 
-      await Institution.update(req.body, {
-        where: { id },
-      });
+      await institution.update({ ...req.body, updatedAt: new Date() });
       return res.status(200).send({
         message: "Institución actualizado correctamente",
       });

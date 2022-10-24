@@ -12,9 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       weight: {
         type: DataTypes.DOUBLE,
+        allowNull: false,
         defaultValue: 0.0,
       },
-      totalCalorificValue: {
+      total: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0.0,
+      },
+      ci: {
         type: DataTypes.DOUBLE,
         allowNull: false,
         defaultValue: 0.0,
