@@ -26,7 +26,7 @@ const registerController = async (req, res) => {
         400
       );
     }
-    console.log(data);
+
     const password = await encrypt(data.password);
     const newUser = { ...data, password };
     const user = await User.create(newUser);

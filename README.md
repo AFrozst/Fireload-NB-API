@@ -8,7 +8,7 @@ Es necesario crear la base de datos **fireload-nb-db** en su servidor pgAdmin.
 
 Desde su CLI y dentro de la carpeta _fireload-nb-api/_, ejecuta el siguiente comando:
 
-npm install
+    npm install
 
 **Asegúrese de haber modificado las configuraciones de la base de datos dentro de config/config.js**
 
@@ -16,17 +16,17 @@ Cree su archivo _.env_ segun las variables del _.env.example_. Modifique los cam
 
 Para ejecutar migraciones use el siguiente comando dentro de la carpeta _fireload-nb-api/_ **solo use este comando una vez cuando la configuracion del .env este terminado**:
 
-npm run create-schema
+    npm run create-schema
 
 Para ejecutar los seeder, use el siguiente comando **solo se necesita en un entorno local/desarrollo, evite usarlo en producción** :
 
-npm run seeder
+    npm run seeder
 
 ## 💻 Ejecutar Proyecto
 
 Para ejecutar el proyecto use el siguiente comando dentro de la carpeta _fireload-nb-api/_:
 
-npm run start
+    npm run start
 
 Para ver el esquema de la base de datos, ejecute en su navegador:
 
