@@ -72,6 +72,7 @@ const FireSectorController = {
       let institution = await Institution.findByPk(institutionId);
 
       institution.numberFireSectors += 1;
+      institution.updatedAt = new Date();
       await institution.save();
 
       return res.status(201).send({
@@ -98,6 +99,11 @@ const FireSectorController = {
       }
 
       await fireSector.update({ ...req.body, updatedAt: new Date() });
+      await Institution.update(
+        { updatedAt: new Date() },
+        { where: { id: institutionId } }
+      );
+
       return res.status(200).send({
         message: "Sector de incendio actualizado correctamente",
         data: fireSector,
@@ -123,6 +129,7 @@ const FireSectorController = {
 
       const institution = await Institution.findByPk(institutionId);
       institution.numberFireSectors -= 1;
+      institution.updatedAt = new Date();
       await institution.save();
 
       await fireSector.destroy();
@@ -184,6 +191,11 @@ const FireSectorController = {
       fireSector.numberMaterials += 1;
       await fireSector.save();
 
+      await Institution.update(
+        { updatedAt: new Date() },
+        { where: { id: institutionId } }
+      );
+
       return res.status(200).send({
         message: "Material combustible agregado correctamente",
       });
@@ -227,8 +239,13 @@ const FireSectorController = {
 
       fireSector.numberMaterials -= 1;
       await fireSector.save();
-
       await fireSector.removeMaterial(material);
+
+      await Institution.update(
+        { updatedAt: new Date() },
+        { where: { id: institutionId } }
+      );
+
       return res.status(200).send({
         message: "Material combustible eliminado correctamente",
       });

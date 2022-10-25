@@ -4,7 +4,7 @@ const {
   handleHttpErrorResponse,
   handleHttpError,
 } = require("../../utils/handleError");
-const { Institution } = require("../models");
+const { Institution, FireSector } = require("../models");
 
 const InstitutionController = {
   /**
@@ -19,6 +19,7 @@ const InstitutionController = {
         where: {
           userId: user.id,
         },
+        order: [["updatedAt", "DESC"]],
       });
       return res.status(200).send({
         data: institutions,
@@ -34,6 +35,16 @@ const InstitutionController = {
       let institution = await Institution.findOne({
         where: { id },
         include: ["firesectors"],
+        order: [
+          [
+            {
+              model: FireSector,
+              as: "firesectors",
+            },
+            "updatedAt",
+            "DESC",
+          ],
+        ],
       });
 
       if (!institution) {
