@@ -18,6 +18,7 @@ const FireSectorController = {
       let fireSectors = await FireSector.findAll({
         where: { institutionId },
         include: ["institution"],
+        order: [["updatedAt", "DESC"]],
       });
       return res.status(200).send({
         data: fireSectors,
@@ -40,10 +41,21 @@ const FireSectorController = {
           {
             model: CombustibleMaterial,
             as: "materials",
-            //through: {
-            //attributes: ["weight", "totalCalorificValue"],
-            //},
+            through: {
+              model: Sector_Material,
+              attributes: { exclude: ["createdAt", "updatedAt"] },
+            },
           },
+        ],
+        order: [
+          [
+            {
+              model: CombustibleMaterial,
+              as: "materials",
+            },
+            "id",
+            "ASC",
+          ],
         ],
       });
       if (!fireSector) {
@@ -189,6 +201,7 @@ const FireSectorController = {
       });
 
       fireSector.numberMaterials += 1;
+      fireSector.updatedAt = new Date();
       await fireSector.save();
 
       await Institution.update(
@@ -237,9 +250,10 @@ const FireSectorController = {
         );
       }
 
-      fireSector.numberMaterials -= 1;
-      await fireSector.save();
       await fireSector.removeMaterial(material);
+      fireSector.numberMaterials -= 1;
+      fireSector.updatedAt = new Date();
+      await fireSector.save();
 
       await Institution.update(
         { updatedAt: new Date() },
