@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       intrinsicLevel: {
         type: DataTypes.STRING,
-        defaultValue: "BAJO (1)",
+        defaultValue: "",
       },
       createdAt: {
         type: DataTypes.DATE,
