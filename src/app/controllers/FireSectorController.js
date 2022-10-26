@@ -11,6 +11,8 @@ const {
   Sector_Material,
 } = require("../models");
 
+const { updateFireload } = require("../../utils/fireload/handleFireload");
+
 const FireSectorController = {
   getFireSectorsByInstitutionId: async (req, res) => {
     try {
@@ -102,6 +104,7 @@ const FireSectorController = {
       let fireSector = await FireSector.findOne({
         where: { id, institutionId },
       });
+
       if (!fireSector) {
         return handleHttpErrorResponse(
           res,
@@ -110,7 +113,11 @@ const FireSectorController = {
         );
       }
 
-      await fireSector.update({ ...req.body, updatedAt: new Date() });
+      await fireSector.update({
+        ...req.body,
+        updatedAt: new Date(),
+      });
+      await updateFireload(id);
       await Institution.update(
         { updatedAt: new Date() },
         { where: { id: institutionId } }
@@ -118,7 +125,6 @@ const FireSectorController = {
 
       return res.status(200).send({
         message: "Sector de incendio actualizado correctamente",
-        data: fireSector,
       });
     } catch (error) {
       handleHttpError(res, error.message);
@@ -186,19 +192,26 @@ const FireSectorController = {
         );
       }
 
-      let { materialId, weight, total, ci } = req.body;
+      let { materialId, weight, ci } = req.body;
       /*const created = await fireSector.addMaterial(material, {
         through: { weight, totalCalorificValue },
       });*/
+
+      const valueCalorific = material.heatValue;
+      const totalCalorificValue = valueCalorific * weight * ci;
+
       await Sector_Material.create({
         sectorId: id,
         materialId,
         weight,
-        total,
+        total: totalCalorificValue,
         ci,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
+
+      // Update fireload
+      await updateFireload(id);
 
       fireSector.numberMaterials += 1;
       fireSector.updatedAt = new Date();
@@ -251,9 +264,13 @@ const FireSectorController = {
       }
 
       await fireSector.removeMaterial(material);
-      fireSector.numberMaterials -= 1;
+      fireSector.numberMaterials =
+        fireSector.numberMaterials === 0 ? 0 : fireSector.numberMaterials - 1;
       fireSector.updatedAt = new Date();
       await fireSector.save();
+
+      // Update fireload
+      await updateFireload(id);
 
       await Institution.update(
         { updatedAt: new Date() },
