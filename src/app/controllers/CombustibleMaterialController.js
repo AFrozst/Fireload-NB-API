@@ -52,14 +52,14 @@ const CombustibleMaterialController = {
       let { query } = req.query;
 
       let combustibleMaterials = await CombustibleMaterial.findAll({
-        where: {
-          [Op.or]: {
-            name: {
-              [Op.iLike]: query + "%",
-              [Op.iLike]: "%" + query + "%",
-            },
-          },
-        },
+        where: Sequelize.where(
+          Sequelize.fn("unaccent", Sequelize.col("name")),
+          {
+            [Op.iLike]: query + "%",
+            [Op.iLike]: "%" + query + "%",
+          }
+        ),
+        order: [["name", "ASC"]],
         raw: true,
         nest: true,
       });
