@@ -11,6 +11,11 @@ router.get(
   CombustibleMaterialController.getCombustibleMaterials
 );
 router.get(
+  routes.search,
+  authMiddleware,
+  CombustibleMaterialController.searchCombustibleMaterial
+);
+router.get(
   routes.id,
   authMiddleware,
   CombustibleMaterialController.getCombustibleMaterial
