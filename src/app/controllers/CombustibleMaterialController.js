@@ -1,4 +1,6 @@
 "use strict";
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const {
   handleHttpErrorResponse,
@@ -39,6 +41,31 @@ const CombustibleMaterialController = {
       }
       return res.status(200).send({
         data: combustibleMaterial,
+      });
+    } catch (error) {
+      handleHttpError(res, error.message);
+    }
+  },
+
+  searchCombustibleMaterial: async (req, res) => {
+    try {
+      let { query } = req.query;
+
+      let combustibleMaterials = await CombustibleMaterial.findAll({
+        where: {
+          [Op.or]: {
+            name: {
+              [Op.iLike]: query + "%",
+              [Op.iLike]: "%" + query + "%",
+            },
+          },
+        },
+        raw: true,
+        nest: true,
+      });
+
+      return res.status(200).send({
+        data: combustibleMaterials,
       });
     } catch (error) {
       handleHttpError(res, error.message);

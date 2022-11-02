@@ -3,6 +3,7 @@
 module.exports = {
   empty: "",
   id: "/:id",
+  search: "/search",
   auth: {
     url: "/auth",
     login: "/login",
