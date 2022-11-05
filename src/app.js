@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth.routes");
 const institutionRoutes = require("./routes/institution.routes");
 const fireSectorRoutes = require("./routes/fireSector.routes");
 const combustibleMaterialRoutes = require("./routes/combustibleMaterial.routes");
+const reportRoutes = require("./routes/reports.routes");
 
 class Application {
   constructor() {
@@ -31,6 +32,7 @@ class Application {
       ROUTE_URL + routes.materials.url,
       combustibleMaterialRoutes
     );
+    this.express.use(ROUTE_URL + routes.reports.url, reportRoutes);
   }
 
   setUpExpress() {
