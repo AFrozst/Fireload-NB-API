@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 //const morgan = require("morgan");
 //const bodyParser = require("body-parser");
 
@@ -39,6 +40,7 @@ class Application {
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: false }));
     this.express.use(cors());
+    this.express.use(express.static(path.join(__dirname, "storage")));
     //this.express.use(bodyParser.json());
     //this.express.use(bodyParser.urlencoded({ extended: false }));
     //this.express.use(morgan('dev'));
@@ -51,7 +53,7 @@ class Application {
   setUpNotFound() {
     this.express.use((req, res, next) => {
       const error = new Error("Ruta no encontrada");
-      err.status = 404;
+      error.status = 404;
       next(error);
     });
   }
