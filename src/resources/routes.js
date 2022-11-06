@@ -21,4 +21,10 @@ module.exports = {
     url: "/materials",
     materialId: "/:materialId",
   },
+  reports: {
+    url: "/reports",
+    types: {
+      pdf: "/pdf",
+    },
+  },
 };
