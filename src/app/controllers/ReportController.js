@@ -6,11 +6,20 @@ const {
   handleHttpErrorResponse,
   handleHttpError,
 } = require("../../utils/handleError");
+const {
+  getFilename,
+  getPathStorage,
+} = require("../../utils/reports/handleReport");
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 const generatePDF = async (req, res) => {
   try {
     let path_filePDF = "";
     const { institutionId } = req.params;
+    let exampleFilename = "example.pdf";
+
+    const parhStorage = getPathStorage();
+    const filename = getFilename(institutionId, "pdf");
 
     // Get data from idInstitution = {institution and sectors}
     // Transform data in a specific json object
@@ -19,15 +28,19 @@ const generatePDF = async (req, res) => {
     // Create a pdf file
 
     // Change a new path_filePDF
-    path_filePDF =
-      "http://jornadasciberseguridad.riasc.unileon.es/archivos/ejemplo_esp.pdf";
+    path_filePDF = `${PUBLIC_URL}/pdfs/${filename}`;
 
-    // send status and path_filePDF
-    res.status(200).send({
+    const data = {
       status: "success",
       message: "Archivo PDF creado exitosamente",
-      institution: institutionId,
+      parhStorage,
       path_filePDF,
+      url: `${PUBLIC_URL}/pdfs/${exampleFilename}`,
+    };
+
+    // send status and path_filePDF
+    return res.status(200).send({
+      data,
     });
   } catch (error) {
     handleHttpError(res, error.message);
