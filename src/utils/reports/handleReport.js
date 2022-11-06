@@ -1,3 +1,6 @@
+const puppeteer = require("puppeteer");
+const fs = require("fs");
+
 const getFilename = (idInstitution, ext) => {
   const filename = `report-fireloadnb-${idInstitution}-doc.${ext}`;
   return filename;
@@ -8,26 +11,30 @@ const getPathStorage = () => {
   return pathStorage;
 };
 
-const generatePDF = async (templateHTML, id, dataTable) => {
-  // const pathStorage = getPathStorage();
-  // const filename = getFilename(data.idInstitution, "pdf");
-  // const pathFile = `${pathStorage}/${filename}`;
-  // const browser = await puppeteer.launch();
-  // const page = await browser.newPage();
-  // await page.setContent(templateHTML);
-  // await page.emulateMediaType("screen");
-  // await page.pdf({
-  //   path: pathFile,
-  //   format: "A4",
-  //   printBackground: true,
-  // });
-  // await browser.close();
-  // return pathFile;
-  return "fireload.pdf";
+const createPDF = async (templateHTML, filename) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.setContent(templateHTML);
+  await page.emulateMediaType("print");
+  await page.pdf({
+    path: `${getPathStorage()}/${filename}`,
+    format: "A4",
+    printBackground: true,
+    margin: {
+      top: "2cm",
+      right: "3cm",
+      bottom: "2cm",
+      left: "3cm",
+    },
+  });
+
+  await browser.close();
+  return filename;
 };
 
 module.exports = {
   getFilename,
   getPathStorage,
-  generatePDF,
+  createPDF,
 };
