@@ -11,11 +11,7 @@ const {
   handleHttpErrorResponse,
   handleHttpError,
 } = require("../../utils/handleError");
-const {
-  getFilename,
-  getPathStorage,
-  createPDF,
-} = require("../../utils/reports/handleReport");
+const { getFilename, createPDF } = require("../../utils/reports/handleReport");
 const { mapperData } = require("../../utils/reports/mapperDataReport");
 const renderTemplate = require("../../utils/reports/render-template");
 const PUBLIC_URL = process.env.PUBLIC_URL;
@@ -76,11 +72,11 @@ const generatePDF = async (req, res) => {
     path_filePDF = `${PUBLIC_URL}/pdfs/${filenamePDF}`;
 
     const data = {
-      status: "success",
       message: "Archivo PDF creado exitosamente",
-      path_filePDF,
-      url_filePDF: `/pdfs/${filenamePDF}`,
       url_example: `/pdfs/${exampleFilename}`,
+      filename: filename,
+      url_filename: path_filePDF,
+      url_pathFileName: `/pdfs/${filenamePDF}`,
     };
 
     return res.status(200).send({
