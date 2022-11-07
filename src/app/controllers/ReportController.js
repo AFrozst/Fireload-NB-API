@@ -79,7 +79,8 @@ const generatePDF = async (req, res) => {
       status: "success",
       message: "Archivo PDF creado exitosamente",
       path_filePDF,
-      url: `${PUBLIC_URL}/pdfs/${exampleFilename}`,
+      url_filePDF: `/pdfs/${filenamePDF}`,
+      url_example: `/pdfs/${exampleFilename}`,
     };
 
     return res.status(200).send({
