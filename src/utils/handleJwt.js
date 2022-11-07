@@ -12,10 +12,7 @@ const tokenSign = async (user) => {
       id: user.id,
       email: user.email,
     },
-    JWT_SECRET,
-    {
-      expiresIn: JWT_EXPIRES_IN,
-    }
+    JWT_SECRET
   );
   return token;
 };

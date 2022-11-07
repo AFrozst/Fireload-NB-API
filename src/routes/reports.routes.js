@@ -8,6 +8,8 @@ const routes = require("../resources/routes");
 
 router.get(
   routes.reports.types.pdf + routes.institutions.institutionId,
+  authMiddleware,
+  checkAuthorizationAction,
   generatePDF
 );
 

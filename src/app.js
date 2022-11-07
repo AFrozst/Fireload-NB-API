@@ -3,8 +3,6 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-//const morgan = require("morgan");
-//const bodyParser = require("body-parser");
 
 const ROUTE_URL = "/api";
 const routes = require("./resources/routes");
@@ -41,9 +39,6 @@ class Application {
     this.express.use(express.urlencoded({ extended: false }));
     this.express.use(cors());
     this.express.use(express.static(path.join(__dirname, "storage")));
-    //this.express.use(bodyParser.json());
-    //this.express.use(bodyParser.urlencoded({ extended: false }));
-    //this.express.use(morgan('dev'));
   }
 
   setUpPort() {
