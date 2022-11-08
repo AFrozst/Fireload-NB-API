@@ -13,11 +13,16 @@ const fireSectorRoutes = require("./routes/fireSector.routes");
 const combustibleMaterialRoutes = require("./routes/combustibleMaterial.routes");
 const reportRoutes = require("./routes/reports.routes");
 
+// Doc-swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerSetup = require("./resources/docs/swagger");
+
 class Application {
   constructor() {
     this.express = express();
     this.setUpExpress();
     this.setUproutes();
+    this.setSwaggerDoc();
     this.setUpNotFound();
     this.setUpPort();
   }
@@ -32,6 +37,14 @@ class Application {
       combustibleMaterialRoutes
     );
     this.express.use(ROUTE_URL + routes.reports.url, reportRoutes);
+  }
+
+  setSwaggerDoc() {
+    this.express.use(
+      "/api-docs",
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerSetup)
+    );
   }
 
   setUpExpress() {
