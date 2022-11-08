@@ -32,7 +32,9 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "puppeteer": "^19.2.2",
-    "sequelize": "^6.21.4"
+    "sequelize": "^6.21.4",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
