@@ -8,6 +8,9 @@ module.exports = {
     url: "/auth",
     login: "/login",
     register: "/register",
+    users: {
+      url: "/user",
+    },
   },
   institutions: {
     url: "/institutions",
