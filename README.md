@@ -33,3 +33,5 @@ Para ver el esquema de la base de datos, ejecute en su navegador:
 https://drive.google.com/file/d/1m5MqO7-VSKblMKou-8BuTPcxA7-zHlE7/view
 
 Se utilizaron PostgreSQL y Node.js para el desarrollo de este proyecto con la implementacion del framework Express.
+
+Documentación API REST: http://localhost:5000/api-docs
