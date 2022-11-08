@@ -75,4 +75,35 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { registerController, loginController };
+/**
+ * Get user data
+ * @param {*} req
+ * @param {*} res
+ */
+const getUser = async (req, res) => {
+  try {
+    const { user } = req;
+
+    const userSearch = await User.findOne({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (!userSearch) {
+      return handleHttpErrorResponse(res, "Usuario no encontrado", 404);
+    }
+
+    return res.status(200).send({
+      data: {
+        name: userSearch.name,
+        lastName: userSearch.lastName,
+        email: userSearch.email,
+      },
+    });
+  } catch (error) {
+    handleHttpError(res, error.message);
+  }
+};
+
+module.exports = { registerController, loginController, getUser };

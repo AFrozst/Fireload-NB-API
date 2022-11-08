@@ -5,7 +5,9 @@ const { validateRegister, validateLogin } = require("../validators/auth");
 const {
   registerController,
   loginController,
+  getUser,
 } = require("../app/controllers/AuthController");
+const authMiddleware = require("../middleware/session");
 const routes = require("../resources/routes");
 
 /**
@@ -68,5 +70,46 @@ router.post(routes.auth.register, validateRegister, registerController);
  *        description: Error interno del servidor
  */
 router.post(routes.auth.login, validateLogin, loginController);
+
+/**
+ * Login a user
+ * @openapi
+ * /auth/user:
+ *  get:
+ *    tags:
+ *    - authorization
+ *    summary: "Obtener mis datos de usuario"
+ *    description: "Endpoint para obtener los datos de usuario en Fireload NB de la persona que realiza la petición"
+ *    responses:
+ *      '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                name:
+ *                  type: string
+ *                  description: Nombre del Usuario
+ *                lastName:
+ *                  type: string
+ *                  description: Apellido del Usuario
+ *                email:
+ *                  type: string
+ *                  description: Email del Usuario
+ *      '401':
+ *        description: Error de autenticación
+ *      '404':
+ *        description: Usuario no encontrado
+ *      '500':
+ *        description: Error interno del servidor
+ *    security:
+ *     - bearerAuth: []
+ */
+router.get(
+  routes.auth.users.url,
+  authMiddleware,
+  getUser
+);
 
 module.exports = router;
