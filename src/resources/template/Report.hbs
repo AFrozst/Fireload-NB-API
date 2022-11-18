@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Fireload NB Reporte</h1>
+      <p>Institución: {{fullName}}</p>
+      <p>Ubicación: {{location}}</p>
+      <p>La institución cuenta con
+        {{numberFireSectors}}
+        sectores de incendio</p>
+      <br />
+
+      <h2 class="text-center">Sectores de incendio</h2>
+      {{#each firesectors}}
+        <p>Sector de incendio: {{name}}</p>
+        <p>Ubicación: {{location}}</p>
+        <p>Area: {{area}} m2</p>
+        <p>Grado de Activacion (Ra): {{Ra}}</p>
+        <p>Carga de fuego ponderada (Qp): {{fireload}} Mcal/m2</p>
+        <h3>{{numberMaterials}} Materiales combustibles identificados</h3>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Material</th>
+              <th scope="col">Peso (Kg)</th>
+              <th scope="col">Poder Calorífico</th>
+              <th scope="col">Grado de peligrosidad (Ci)</th>
+              <th scope="col">Total (Mcal)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each materials}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{weight}}</td>
+                <td>{{heatValue}}</td>
+                <td>{{ci}}</td>
+                <td>{{total}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+
+        <br />
+      {{/each}}
+    </div>
+  </body>
+</html>
+
+<style type="text/css">
+  .body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 200;
+  }
+  .table {
+    width: 100%;
+  }
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+  }
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+  .table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+  }
+  .table .table {
+    background-color: #fff;
+  }
+  .table-sm th,
+  .table-sm td {
+    padding: 0.3rem;
+  }
+  .table-bordered {
+    border: 1px solid #dee2e6;
+  }
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #dee2e6;
+  }
+  .table-bordered thead th,
+  .table-bordered thead td {
+    border-bottom-width: 2px;
+  }
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .table-hover tbody tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+</style>

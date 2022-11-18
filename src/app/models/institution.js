@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const Institution = sequelize.define(
     "Institution",
@@ -8,21 +10,47 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      fullName: DataTypes.STRING,
+      fullName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      location: {
+        type: DataTypes.STRING,
+      },
       numberFireSectors: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 0,
       },
-      createdAt: DataTypes.DATE,
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
     },
     {
       timestamps: false,
     }
   );
 
-  Institution.associate = function (models) {
-    // associations can be defined here
+  Institution.associate = (models) => {
+    Institution.hasMany(models.FireSector, {
+      as: "firesectors",
+      foreignKey: "institutionId",
+    });
+
+    Institution.belongsTo(models.User, {
+      as: "user",
+      foreignKey: "userId",
+    });
   };
 
   return Institution;

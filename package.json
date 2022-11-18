@@ -1,8 +1,12 @@
 {
   "name": "fireload-nb-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "API REST de Fireload NB",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AllenBVargas/Fireload-NB-API.git"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
@@ -15,13 +19,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "express-validator": "^6.14.0",
+    "fs-extra": "^10.1.0",
+    "handlebars": "^4.7.7",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.21.4"
+    "puppeteer": "^16.2.0",
+    "sequelize": "^6.21.4",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",

@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = (sequelize, DataTypes) => {
   const FireSector = sequelize.define(
     "FireSector",
@@ -8,25 +10,81 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      name: DataTypes.STRING,
-      area: DataTypes.DOUBLE,
-      description: DataTypes.STRING,
-      observations: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
-      totalFireload: {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      location: {
+        type: DataTypes.STRING,
+      },
+      area: {
         type: DataTypes.DOUBLE,
         allowNull: false,
-        defaultValue: 0.0,
+      },
+      environmentDescription: {
+        type: DataTypes.STRING,
+      },
+      activity: {
+        type: DataTypes.STRING,
+      },
+      typeFurniture: {
+        type: DataTypes.STRING,
+      },
+      occupation: {
+        type: DataTypes.STRING,
+      },
+      observations: {
+        type: DataTypes.STRING,
+      },
+      numberMaterials: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      Ra: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      fireload: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      intrinsicLevel: {
+        type: DataTypes.STRING,
+        defaultValue: "",
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+      },
+      institutionId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Institutions",
+          key: "id",
+        },
       },
     },
     {
-      timestamps: false,
+      tableName: "FireSectors",
     }
   );
 
   FireSector.associate = function (models) {
     // associations can be defined here
+    FireSector.belongsTo(models.Institution, {
+      as: "institution",
+      foreignKey: "institutionId",
+    });
+
+    FireSector.belongsToMany(models.CombustibleMaterial, {
+      as: "materials",
+      through: "Sector_Material",
+      foreignKey: "sectorId",
+    });
   };
 
   return FireSector;

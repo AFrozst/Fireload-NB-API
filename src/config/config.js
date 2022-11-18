@@ -1,9 +1,9 @@
 const data = {
   "development": {
-    "username": "postgres",
-    "password": "host",
-    "database": "fireload-nb-db",
-    "host": "127.0.0.1",
+    "username": process.env.DB_USERNAME || "postgres",
+    "password": process.env.DB_PASSWORD || "host",
+    "database": process.env.DATABASE || "fireload-nb-db",
+    "host": process.env.DB_HOST || "127.0.0.1",
     "dialect": "postgres",
     "define": {
       "schema": "public",
@@ -11,12 +11,12 @@ const data = {
     },
   },
   "production": {
-    "username": process.env.USERNAME,
-    "password": process.env.PASSWORD,
-    "database": process.env.DATABASE,
-    "host": process.env.HOST,
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD,
+    "database": process.env.DB_DATABASE,
+    "host": process.env.DB_HOST,
+    "port": process.env.DB_PORT,
     "dialect": "postgres",
-    "NODE_ENV": "production",
     "define": {
       "schema": "public",
       "timestamps": false,

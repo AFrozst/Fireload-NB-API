@@ -1,30 +1,57 @@
 "use strict";
+require("dotenv").config();
 const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");
 
 const ROUTE_URL = "/api";
-const routes = require("./routes/index");
+const routes = require("./resources/routes");
+const routesWelcome = require("./routes/index.routes");
+const authRoutes = require("./routes/auth.routes");
+const institutionRoutes = require("./routes/institution.routes");
+const fireSectorRoutes = require("./routes/fireSector.routes");
+const combustibleMaterialRoutes = require("./routes/combustibleMaterial.routes");
+const reportRoutes = require("./routes/reports.routes");
+
+// Doc-swagger
+const swaggerUi = require("swagger-ui-express");
+const swaggerSetup = require("./resources/docs/swagger");
 
 class Application {
   constructor() {
     this.express = express();
     this.setUpExpress();
     this.setUproutes();
+    this.setSwaggerDoc();
     this.setUpNotFound();
     this.setUpPort();
   }
 
   setUproutes() {
-    this.express.use(ROUTE_URL, routes);
+    this.express.use(routesWelcome);
+    this.express.use(ROUTE_URL + routes.auth.url, authRoutes);
+    this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
+    this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
+    this.express.use(
+      ROUTE_URL + routes.materials.url,
+      combustibleMaterialRoutes
+    );
+    this.express.use(ROUTE_URL + routes.reports.url, reportRoutes);
+  }
+
+  setSwaggerDoc() {
+    this.express.use(
+      "/api-docs",
+      swaggerUi.serve,
+      swaggerUi.setup(swaggerSetup)
+    );
   }
 
   setUpExpress() {
-    this.express.use(bodyParser.json());
-    this.express.use(bodyParser.urlencoded({ extended: false }));
+    this.express.use(express.json());
+    this.express.use(express.urlencoded({ extended: false }));
     this.express.use(cors());
-    //this.express.use(morgan('dev'));
+    this.express.use(express.static(path.join(__dirname, "storage")));
   }
 
   setUpPort() {
@@ -33,8 +60,8 @@ class Application {
 
   setUpNotFound() {
     this.express.use((req, res, next) => {
-      const error = new Error("Rsouce not found");
-      err.status = 404;
+      const error = new Error("Ruta no encontrada");
+      error.status = 404;
       next(error);
     });
   }
