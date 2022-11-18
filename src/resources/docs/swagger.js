@@ -10,6 +10,9 @@ const swaggerDefinition = {
   },
   servers: [
     {
+      url: "https://fireload-nb-api-dev.herokuapp.com/api",
+    },
+    {
       url: "http://localhost:5000/api",
     },
   ],
