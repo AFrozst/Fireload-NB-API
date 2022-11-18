@@ -28,7 +28,7 @@ class Application {
   }
 
   setUproutes() {
-    this.express.use(ROUTE_URL, routesWelcome);
+    this.express.use(routesWelcome);
     this.express.use(ROUTE_URL + routes.auth.url, authRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, fireSectorRoutes);
     this.express.use(ROUTE_URL + routes.institutions.url, institutionRoutes);
